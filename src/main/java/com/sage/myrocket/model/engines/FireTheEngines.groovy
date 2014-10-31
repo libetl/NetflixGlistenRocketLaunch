@@ -8,7 +8,7 @@ import com.amazonaws.services.simpleworkflow.flow.core.Promise;
 @ActivityRegistrationOptions(
     defaultTaskScheduleToStartTimeoutSeconds = -1L,
     defaultTaskStartToCloseTimeoutSeconds = 300L)
-public interface FireTheEngines {
+interface FireTheEngines {
 
     int preheating (Promise<Integer> seconds)
     
@@ -16,5 +16,5 @@ public interface FireTheEngines {
     
     boolean startEngine (Promise<Integer> engineNumber)
     
-    void start () throws FailedToStartException
+    void throttle () throws FailedToStartException
 }

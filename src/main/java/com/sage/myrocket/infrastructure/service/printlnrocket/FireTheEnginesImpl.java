@@ -25,7 +25,7 @@ public class FireTheEnginesImpl implements FireTheEngines {
     }
 
     @Override
-    public void start() throws FailedToStartException {
+    public void throttle() throws FailedToStartException {
         // TODO Auto-generated method stub
 
     }
