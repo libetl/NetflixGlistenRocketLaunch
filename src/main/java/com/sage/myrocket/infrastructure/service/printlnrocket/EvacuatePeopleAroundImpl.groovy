@@ -6,10 +6,13 @@ import com.amazonaws.services.simpleworkflow.flow.core.Promise
 import com.netflix.glisten.ActivityOperations;
 import com.netflix.glisten.WorkflowOperations;
 import com.netflix.glisten.impl.swf.SwfActivityOperations
-import com.sage.myrocket.model.engines.FailedToStartException
+import com.sage.myrocket.model.engines.EngineFailedToStartException
 import com.sage.myrocket.model.engines.FireTheEngines
 import com.sage.myrocket.model.people.EvacuatePeopleAround
+import com.sage.myrocket.model.people.SomeoneStillInTheLaunchpadException
+import com.sage.myrocket.model.people.SpeakerNotWorkingException
 import com.netflix.glisten.impl.swf.SwfWorkflowOperations
+import com.sage.myrocket.infrastructure.service.util.LuckGenerator
 
 class EvacuatePeopleAroundImpl implements EvacuatePeopleAround {
     
@@ -19,23 +22,29 @@ class EvacuatePeopleAroundImpl implements EvacuatePeopleAround {
     WorkflowOperations<EvacuatePeopleAround> evacuateOperations = SwfWorkflowOperations.of(EvacuatePeopleAround)
     
     @Override
-    boolean announceImmediateLaunch() {
-        println "Please leave the building for immediate launch" 
-        status "Please leave the building for immediate launch" 
+    void announceImmediateLaunch() throws SpeakerNotWorkingException {
+        if (LuckGenerator.itHappens (50, 1000)){
+            println "Pblm : the speaker is not working. Some tests will be lead to understand what happened"
+            recordHeartbeat("Pblm : the speaker is not working. Some tests will be lead to understand what happened")
+            throw new SpeakerNotWorkingException ()
+        }else{
+            println "Info : A voice says \"Please leave the building for an immediate launch\""
+            recordHeartbeat("Info : A voice says \"Please leave the building for an immediate launch\"")
+        }
         true
     }
 
     @Override
-    Promise<Boolean> floorsCleared() {
+    void floorsCleared() throws SomeoneStillInTheLaunchpadException {
         Thread.sleep (10000)
-        if (Math.random() % 10 > 8){
+        if (LuckGenerator.itHappens (10, 1000)){
             println "Pblm : some people are staying in the launch pad"
-            status  "Pblm : some people are staying in the launch pad"
-            return Promise.asPromise(false)
+            recordHeartbeat("Pblm : some people are staying in the launch pad")
+            throw new SomeoneStillInTheLaunchpadException ()
+        }else{
+            println "Info : The launch pad is cleared"
+            recordHeartbeat("Info : The launch pad is cleared")
         }
-        println "Info : The launch pad is cleared"
-        status  "Info : The launch pad is cleared"
-        return Promise.asPromise(true)
     }
 
 

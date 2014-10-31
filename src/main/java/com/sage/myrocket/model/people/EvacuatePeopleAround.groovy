@@ -10,7 +10,7 @@ import com.amazonaws.services.simpleworkflow.flow.core.Promise
     defaultTaskStartToCloseTimeoutSeconds = 300L)
 interface EvacuatePeopleAround {
 
-    boolean announceImmediateLaunch ()
+    void announceImmediateLaunch () throws SpeakerNotWorkingException
     
-    Promise<Boolean> floorsCleared()
+    void floorsCleared() throws SomeoneStillInTheLaunchpadException
 }

@@ -10,9 +10,9 @@ import com.amazonaws.services.simpleworkflow.flow.core.Promise;
     defaultTaskStartToCloseTimeoutSeconds = 300L)
 public interface CloseTheDoors {
 
-    boolean floorDoorsReadyToClose (Promise<Integer> floorNumber, Promise<Integer> doorNumber)
+    boolean floorDoorsReadyToClose (int floorNumber, int doorNumber)
     
-    boolean closeSound ();
+    void closeSound ()
 
-    boolean closeDoor (Promise<Integer> floorNumber, Promise<Integer> doorNumber)
+    void closeDoor (int floorNumber, int doorNumber) throws CloseMalfunctionException, LockMalfunctionException
 }

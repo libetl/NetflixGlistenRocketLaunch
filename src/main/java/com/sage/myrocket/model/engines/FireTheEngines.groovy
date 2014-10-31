@@ -2,6 +2,7 @@ package com.sage.myrocket.model.engines;
 
 import com.amazonaws.services.simpleworkflow.flow.annotations.Activities;
 import com.amazonaws.services.simpleworkflow.flow.annotations.ActivityRegistrationOptions;
+import com.amazonaws.services.simpleworkflow.flow.annotations.Asynchronous
 import com.amazonaws.services.simpleworkflow.flow.core.Promise;
 
 @Activities(version = "1.0")
@@ -9,12 +10,11 @@ import com.amazonaws.services.simpleworkflow.flow.core.Promise;
     defaultTaskScheduleToStartTimeoutSeconds = -1L,
     defaultTaskStartToCloseTimeoutSeconds = 300L)
 interface FireTheEngines {
-
-    int preheating (Promise<Integer> seconds)
     
-    int preHeatingRemainingSeconds ();
+    @Asynchronous
+    Promise<Void> preheating (int seconds)
     
-    boolean startEngine (Promise<Integer> engineNumber)
+    void startEngine (int engineNumber) throws EngineFailedToStartException
     
-    void throttle () throws FailedToStartException
+    void throttle () throws ThrottleException
 }
