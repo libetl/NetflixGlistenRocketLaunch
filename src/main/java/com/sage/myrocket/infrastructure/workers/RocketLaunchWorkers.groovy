@@ -52,25 +52,18 @@ class RocketLaunchWorkers {
         
         ActivityWorker aw1 = new ActivityWorker(simpleWorkflow, domain, taskList)
         aw1.addActivitiesImplementation(new FireTheEnginesImpl())
-        aw1.shutdownAndAwaitTermination(10, TimeUnit.SECONDS)
-        aw1.setDisableTypeRegistrationOnStart(false)
         aw1.start()
 
         ActivityWorker aw2 = new ActivityWorker(simpleWorkflow, domain, taskList)
         aw2.addActivitiesImplementation(new EvacuatePeopleAroundImpl())
-        aw2.shutdownAndAwaitTermination(10, TimeUnit.SECONDS)
-        aw1.setDisableTypeRegistrationOnStart(false)
         aw2.start()
 
         ActivityWorker aw3 = new ActivityWorker(simpleWorkflow, domain, taskList)
         aw3.addActivitiesImplementation(new CloseTheDoorsImpl())
-        aw3.shutdownAndAwaitTermination(10, TimeUnit.SECONDS)
-        aw1.setDisableTypeRegistrationOnStart(false)
         aw3.start()
 
         WorkflowWorker wfw = new WorkflowWorker(simpleWorkflow, domain, taskList)
         wfw.addWorkflowImplementationType(RocketLaunchWorkflowImpl)
-        aw1.setDisableTypeRegistrationOnStart(false)
         wfw.start()
     }
     
