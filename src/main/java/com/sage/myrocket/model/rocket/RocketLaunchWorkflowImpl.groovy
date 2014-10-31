@@ -1,4 +1,4 @@
-package com.sage.myrocket.infrastructure.service.printlnrocket;
+package com.sage.myrocket.model.rocket;
 
 import java.util.UUID;
 

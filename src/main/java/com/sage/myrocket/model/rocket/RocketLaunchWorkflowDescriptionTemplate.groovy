@@ -11,6 +11,7 @@ class RocketLaunchWorkflowDescriptionTemplate
 
     @Override
     void launchTheRocket(UUID rocketId) {
-        setDescription("${rocketId} rocket will be launched soon")
+        description = "The '${rocketId}' rocket will be launched soon"
+        printf "The '${rocketId}' rocket will be launched soon"
     }
 }
