@@ -26,19 +26,18 @@ class RocketLaunchWorkflowImpl implements RocketLaunchWorkflow, CountdownEndCall
         def rocketFloors = 4
         def doorsPerFloor = 3
         def preheatingTime = promiseFor (360)
-        
+
         getEnginesOperations().activities.preheating(preheatingTime)
         getEvacuateOperations().activities.announceImmediateLaunch()
-        waitFor(getEvacuateOperations().activities.floorsCleared())
-        for (floor in 1..rocketFloors){
-            for (door in 1..doorsPerFloor){
-                doTry {
-                    getCloseOperations().activities.floorDoorsReadyToClose(promiseFor(floor), promiseFor(door))
-                    getCloseOperations().activities.closeDoor(promiseFor(floor), promiseFor(door))
-                }.withCatch {
-                    Throwable t ->
+        waitFor(getEvacuateOperations().activities.floorsCleared()){
+            for (floor in 1..rocketFloors){
+                for (door in 1..doorsPerFloor){
+                    doTry {
+                        getCloseOperations().activities.floorDoorsReadyToClose(promiseFor(floor), promiseFor(door))
+                        getCloseOperations().activities.closeDoor(promiseFor(floor), promiseFor(door))
+                    }.withCatch { Throwable t ->
                         status "Floor ${floor}, Door ${door} : door is locked. Human intervention required"
-                    
+                    }
                 }
             }
         }
@@ -47,7 +46,5 @@ class RocketLaunchWorkflowImpl implements RocketLaunchWorkflow, CountdownEndCall
 
     @Override
     void endOfCountdown() {
-        
     }
-
 }

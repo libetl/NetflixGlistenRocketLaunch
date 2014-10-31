@@ -52,15 +52,9 @@ class RocketLaunchWorkers {
         
         ActivityWorker aw1 = new ActivityWorker(simpleWorkflow, domain, taskList)
         aw1.addActivitiesImplementation(new FireTheEnginesImpl())
+        aw1.addActivitiesImplementation(new EvacuatePeopleAroundImpl())
+        aw1.addActivitiesImplementation(new CloseTheDoorsImpl())
         aw1.start()
-
-        ActivityWorker aw2 = new ActivityWorker(simpleWorkflow, domain, taskList)
-        aw2.addActivitiesImplementation(new EvacuatePeopleAroundImpl())
-        aw2.start()
-
-        ActivityWorker aw3 = new ActivityWorker(simpleWorkflow, domain, taskList)
-        aw3.addActivitiesImplementation(new CloseTheDoorsImpl())
-        aw3.start()
 
         WorkflowWorker wfw = new WorkflowWorker(simpleWorkflow, domain, taskList)
         wfw.addWorkflowImplementationType(RocketLaunchWorkflowImpl)
