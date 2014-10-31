@@ -23,7 +23,6 @@ class RocketLaunchWorkflowImpl implements RocketLaunchWorkflow, CountdownEndCall
 
     @Override
     void launchTheRocket(UUID rocketId) {
-        activities.printf "Starting to launch the Rocket now (id : " + rocketId + ")"
         def rocketFloors = 4
         def doorsPerFloor = 3
         def preheatingTime = promiseFor (360)
