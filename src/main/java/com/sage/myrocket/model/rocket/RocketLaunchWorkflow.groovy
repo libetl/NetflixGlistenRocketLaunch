@@ -12,6 +12,9 @@ import com.amazonaws.services.simpleworkflow.flow.annotations.WorkflowRegistrati
         defaultExecutionStartToCloseTimeoutSeconds = 60L)
 interface RocketLaunchWorkflow {
 
-    @Execute(version = "1.0")
+    /**
+     * @param rocketId
+     */
+    @Execute (version = "1.0")
     void launchTheRocket (UUID rocketId)
 }
